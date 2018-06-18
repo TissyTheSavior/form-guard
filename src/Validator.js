@@ -1,9 +1,9 @@
-import Required from "./Rules/Required";
-import Email    from "./Rules/Email";
-import Url      from "./Rules/Url";
-import Phone    from "./Rules/Phone";
-import Min      from "./Rules/Min";
-import Max      from "./Rules/Max";
+import Required from "./Required";
+import Email    from "./Email";
+import Url      from "./Url";
+import Phone    from "./Phone";
+import Min      from "./Min";
+import Max      from "./Max";
 
 export default class Validator {
 

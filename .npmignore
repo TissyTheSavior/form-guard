@@ -1,1 +1,5 @@
 src/
+.idea/
+yarn.lock
+yarn-error.log
+.gitignore

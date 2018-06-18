@@ -28,17 +28,4 @@ export default class Form {
         return {};
     }
 
-
-    pushItem(property, value) {
-        this[property].push(value);
-    }
-
-    detachItem(property, index) {
-        this[property].splice(index, 1);
-    }
-
-    update(field, value) {
-        this[field] = value;
-    }
-
 }

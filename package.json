@@ -1,6 +1,6 @@
 {
-  "name": "tissy-form-validator",
-  "version": "1.0.15",
+  "name": "form-guard",
+  "version": "0.0.1",
   "description": "An clean api for validating forms",
   "main": "dist/index.js",
   "scripts": {

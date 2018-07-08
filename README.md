@@ -53,12 +53,12 @@ Checks if the input is a url ex: `https://github.com`
 Checks if the input is a phone number.
 ##### min
 examples:
-- 'min:6:chars' will check if the length of the input is 6 or more
-- 'min:3:array' will check if the array length is 3 or more.
+- 'min:6:chars' will check if the length of the input is 6 or more characters long.
+- 'min:3:array' will check if the array length is 3 or more items long.
 - 'min:10' will check if the input is equal to 10 or more.
 ##### max
-- 'max:25:chars' will check if the length of the input is no more then 25
-- 'max:3:array' will check if the array length is no more then 3.
+- 'max:25:chars' will check if the length of the input is no more then 25 characters long.
+- 'max:3:array' will check if the array length is no more then 3 items long.
 - 'max:50' will check if the input is equal to 50 or less.
 ### The Validator
 At this point we have a form and we defined a few rules. Now let's run the validator.

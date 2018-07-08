@@ -81,7 +81,9 @@ To get an error from a field: `validator.getError('email');`
 
 #### Example using JQuery
 ```js
-function prossessForm() {
+$('#my-form').on('submit', function(e) {
+    e.preventDefault();
+    
     let myForm = new MyForm();
     
     myForm.email = $('#email-input').val();
@@ -94,7 +96,7 @@ function prossessForm() {
     }
     
     myForm.submit(); //otherwise submit the form.
-}
+});
 ```
 #### Example using Vue
 Here is how you might do this in Vue. But, if you are using Vue I recommend building your forms with [vuetiful-forms](https://github.com/TissyTheSavior/vuetiful-forms) (My vue library for building forms with Vue + Form Guard)

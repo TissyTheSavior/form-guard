@@ -218,7 +218,7 @@ For the CustomRule to work it must have a validate method.
 if the validation fails we return a string that is the error message to display.
 
 ### Rules API
-To be able to create, validate against rules, and display errors that make sense there are a few properties and methods at your disposal.
+To be able to create, validate against rules, and display errors that make sense. There are a few properties and methods at your disposal.
 
 - value
  > The value of the input

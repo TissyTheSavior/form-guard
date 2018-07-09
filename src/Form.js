@@ -6,6 +6,10 @@ export default class Form {
         this.validator = new Validator(this, this.rules());
     }
 
+    getValidator() {
+        return new Validator(this, this.rules());
+    }
+
     getValidationErrors() {
         return this.validator.errors;
     }

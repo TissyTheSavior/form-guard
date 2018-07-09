@@ -13,14 +13,7 @@ export default class Validator {
         this.currentfield = '';
         this.parentfields = [];
         this.errors = {};
-        this.ruleObjects = {
-            url     : Url,
-            email   : Email,
-            required: Required,
-            phone   : Phone,
-            min     : Min,
-            max     : Max,
-        }
+        this.setValidationRules();
     }
 
     validate() {
@@ -208,6 +201,34 @@ export default class Validator {
 
     fails() {
         return Object.keys(this.errors).length > 0;
+    }
+
+
+    setValidationRules() {
+        let ruleObjects = this.getDefaultRules();
+
+        let customRules = this.customRules();
+
+        for(let rule in customRules) {
+            ruleObjects[rule] = customRules[rule];
+        }
+
+        this.ruleObjects = ruleObjects;
+    }
+
+    getDefaultRules() {
+        return {
+            url     : Url,
+            email   : Email,
+            required: Required,
+            phone   : Phone,
+            min     : Min,
+            max     : Max,
+        };
+    }
+
+    customRules() {
+        return {};
     }
 
 }

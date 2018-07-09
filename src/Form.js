@@ -3,7 +3,7 @@ import Validator from "./Validator";
 export default class Form {
 
     constructor() {
-        this.validator = new Validator(this, this.rules());
+        this.validator = this.getValidator();
     }
 
     getValidator() {

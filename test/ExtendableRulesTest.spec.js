@@ -1,10 +1,11 @@
 import expect    from 'expect';
 import Validator from "../src/Validator";
+import Rule      from "../src/Rule";
 
 
 describe("Validation Rules can be extended", () => {
 
-    class Foo {
+    class Foo extends Rule {
         validate() {
             if(this.value !== 'foo') {
                 return 'value must be foo';
@@ -41,5 +42,20 @@ describe("Validation Rules can be extended", () => {
         expect(errors).toEqual({
             foo: ['value must be foo'],
         });
+    });
+
+    it("Can pass validation", () => {
+        let form = {
+            foo: 'foo',
+        };
+
+        let rules = {
+            foo: ['foo'],
+        };
+
+        let customValidator = new MyCustomValidator(form, rules);
+        let errors = customValidator.validate();
+
+        expect(errors).toEqual({});
     });
 });

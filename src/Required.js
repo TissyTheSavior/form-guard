@@ -28,7 +28,10 @@ export default class Required extends Rule {
 
     tryHandleType(type) {
         let methodName = 'handle'+type;
-
+        if(typeof this[methodName] !== 'function') {
+            console.warn('Could not validate against the type of ' + type + '.', 'accepted types are String and Number');
+            return;
+        }
         return this[methodName]();
     }
 

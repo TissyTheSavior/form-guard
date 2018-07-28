@@ -36,6 +36,14 @@ describe('RulesTest', () => {
         expect(message).toBe(undefined);
     });
 
+    it('Returns undefined when the input is an unprocessable type', () => {
+        let rule = new Required('someField', {});
+
+        let message = rule.validate();
+
+        expect(message).toBe(undefined);
+    });
+
     it('Can validate an Email', () => {
         let rule = new Email('email', 'not an email');
         let message = rule.validate();

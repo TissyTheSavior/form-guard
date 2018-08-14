@@ -1,10 +1,5 @@
-import Required from "./Required";
-import Email    from "./Email";
-import Url      from "./Url";
-import Phone    from "./Phone";
-import Min      from "./Min";
-import Max      from "./Max";
-import RuleSet  from "./RuleSet";
+import RuleSet         from "./RuleSet";
+import RulesCollection from "./RulesCollection";
 
 export default class Validator {
 
@@ -198,7 +193,7 @@ export default class Validator {
             key = options.splice(0, 1)[0];
         }
 
-        return new this.ruleObjects[key](this.currentfield, this.getFieldValue(this.currentfield), options)
+        return new this.ruleCollection[key](this.currentfield, this.getFieldValue(this.currentfield), options);
     }
 
     hasParentField() {
@@ -214,25 +209,10 @@ export default class Validator {
     }
 
     setValidationRules() {
-        let ruleObjects = this.getDefaultRules();
-        let customRules = this.customRules();
+        let ruleCollection = RulesCollection.default();
+        ruleCollection.extend(this.customRules());
 
-        for(let rule in customRules) {
-            ruleObjects[rule] = customRules[rule];
-        }
-
-        this.ruleObjects = ruleObjects;
-    }
-
-    getDefaultRules() {
-        return {
-            url     : Url,
-            email   : Email,
-            required: Required,
-            phone   : Phone,
-            min     : Min,
-            max     : Max,
-        };
+        this.ruleCollection = ruleCollection;
     }
 
     customRules() {

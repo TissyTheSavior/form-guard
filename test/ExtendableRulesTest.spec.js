@@ -23,8 +23,7 @@ describe("Validation Rules can be extended", () => {
 
     it("Can have the custom rules", () => {
         let customValidator = new MyCustomValidator();
-
-        expect(customValidator.ruleObjects).toHaveProperty('foo')
+        expect(customValidator.ruleCollection).toHaveProperty('foo');
     });
 
     it("Will validate against custom rules", () => {

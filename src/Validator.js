@@ -180,20 +180,13 @@ export default class Validator {
     }
 
     callValidationMethod(ruleObjectKeyIndex, ruleSet) {
-        let ruleObjectKey = ruleSet.getRulesInField(this.currentfield)[ruleObjectKeyIndex];
-        let rule = this.makeRuleFromKey(ruleObjectKey);
+        let field = this.currentfield;
+        let key   = ruleSet.getRulesInField(field)[ruleObjectKeyIndex];
+        let value = this.getFieldValue(field);
+
+        let rule = this.ruleCollection.makeRule(key, field, value);
 
         return rule.validate();
-    }
-
-    makeRuleFromKey(key) {
-        let options;
-        if(key.indexOf(':')) {
-            options = key.split(':');
-            key = options.splice(0, 1)[0];
-        }
-
-        return new this.ruleCollection[key](this.currentfield, this.getFieldValue(this.currentfield), options);
     }
 
     hasParentField() {

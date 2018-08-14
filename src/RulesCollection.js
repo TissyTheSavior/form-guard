@@ -18,7 +18,19 @@ export default class RulesCollection {
     }
 
     makeRule(key, field, value) {
-        return new this[key](field, value);
+        let options;
+        [key, options] = RulesCollection.splitKeyFromOptions(key);
+
+        return new this[key](field, value, options);
+    }
+
+    static splitKeyFromOptions(key) {
+        let options;
+        if(key.indexOf(':')) {
+            options = key.split(':');
+            key = options.splice(0, 1)[0];
+        }
+        return [key, options];
     }
 
     static default() {

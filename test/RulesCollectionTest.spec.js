@@ -28,7 +28,7 @@ describe('Rules Collection Test', () => {
         expect(rulesCollection).not.toBe(null);
     });
 
-    it.only('Can get a rule from a key', () => {
+    it('Can get a rule from a key', () => {
         let rulesCollection = RulesCollection.default();
 
         let key = 'url';
@@ -37,6 +37,20 @@ describe('Rules Collection Test', () => {
 
         expect(rulesCollection.makeRule(key, field, value)).toHaveProperty('validate'); // all rules have a validate() method
     });
+
+    it('Can get a rule with options', () => {
+        let rulesCollection = RulesCollection.default();
+
+        let key = 'min:3';
+        let field = 'website';
+        let value = 'value';
+
+        let rule = rulesCollection.makeRule(key, field, value);
+
+        expect(rule.options).toEqual(["3"]);
+
+    });
+
 
 
 });

@@ -58,21 +58,13 @@ export default class Validator {
     }
 
     /**
-     *
+     * Validates a single field given a field name
      * @param fieldName String
      * @returns {*}
      */
     validateField(fieldName) {
         let errors;
-        this.currentfield = fieldName;
-        let ruleSet = this.ruleSet;
-
-        if(fieldName.indexOf('.')) {
-            let fieldNames = fieldName.split('.');
-            this.setCurrentFieldNested(fieldNames);
-            this.setParentFields(fieldNames);
-            ruleSet = ruleSet.getNestedRuleSet(fieldNames);
-        }
+        let ruleSet = this.setUpSingleFieldValidation(fieldName);
 
         errors = this.getErrorsInCurrentField(ruleSet);
 
@@ -82,6 +74,24 @@ export default class Validator {
         }
 
         return errors;
+    }
+
+    /**
+     * Normalizes field data given nested field name
+     * @param fieldName
+     * @returns {RuleSet}
+     */
+    setUpSingleFieldValidation(fieldName) {
+        this.currentfield = fieldName;
+        let ruleSet = this.ruleSet;
+
+        if(fieldName.indexOf('.')) {
+            let fieldNames = fieldName.split('.');
+            this.setCurrentFieldNested(fieldNames);
+            this.setParentFields(fieldNames);
+            ruleSet = ruleSet.getNestedRuleSet(fieldNames);
+        }
+        return ruleSet;
     }
 
     setCurrentFieldNested(fieldNames) {

@@ -4,13 +4,14 @@ import Url      from "./Url";
 import Phone    from "./Phone";
 import Min      from "./Min";
 import Max      from "./Max";
+import RuleSet  from "./RuleSet";
 
 export default class Validator {
 
     constructor(form = {}, ruleSet = {}) {
         this.form         = form;
         this.errors       = {};
-        this.ruleSet      = ruleSet;
+        this.ruleSet      = new RuleSet(ruleSet);
         this.currentfield = '';
         this.parentfields = [];
         this.setValidationRules();
@@ -31,7 +32,7 @@ export default class Validator {
     }
 
     getErrorsInCurrentField(ruleSet) {
-        if(this.isParentField(ruleSet)) {
+        if(ruleSet.isParentField(this.currentfield)) {
             this.validateChildRuleSet(ruleSet);
         }
 
@@ -41,7 +42,7 @@ export default class Validator {
     runValidationsAndGetErrors(ruleSet) {
         let errors = [];
 
-        for(let ruleObjectKeyIndex in this.getFieldRules(ruleSet)) {
+        for(let ruleObjectKeyIndex in ruleSet.getRulesInField(this.currentfield)) {
             let error = this.callValidationMethod(ruleObjectKeyIndex, ruleSet);
             if(error !== undefined) {
                 errors.push(error);
@@ -53,13 +54,25 @@ export default class Validator {
 
     validateChildRuleSet(ruleSet) {
         this.parentfields.push(this.currentfield);
-        this.setErrorsInRuleSet(ruleSet[this.currentfield]);
+        this.setErrorsInRuleSet(ruleSet.getRulesInField(this.currentfield));
     }
 
+    /**
+     *
+     * @param fieldName String
+     * @returns {*}
+     */
     validateField(fieldName) {
         let errors;
         this.currentfield = fieldName;
-        let ruleSet = this.getNestedRuleSet(fieldName);
+        let ruleSet = this.ruleSet;
+
+        if(fieldName.indexOf('.')) {
+            let fieldNames = fieldName.split('.');
+            this.setCurrentFieldNested(fieldNames);
+            this.setParentFields(fieldNames);
+            ruleSet = ruleSet.getNestedRuleSet(fieldNames);
+        }
 
         errors = this.getErrorsInCurrentField(ruleSet);
 
@@ -71,21 +84,14 @@ export default class Validator {
         return errors;
     }
 
-    getNestedRuleSet(fieldName) {
-        let ruleSet = this.ruleSet;
+    setCurrentFieldNested(fieldNames) {
+        this.currentfield = fieldNames[fieldNames.length - 1];
+    }
 
-        if(fieldName.indexOf('.')) {
-            let fieldNames = fieldName.split('.');
-
-            for(let i = 0; i < fieldNames.length - 1; i++) {
-                this.parentfields.push(fieldNames[i]);
-
-                ruleSet = ruleSet[fieldNames[i]];
-                this.currentfield = fieldNames[i + 1];
-            }
+    setParentFields(fieldNames) {
+        for(let i = 0; i < fieldNames.length - 1; i++) {
+            this.parentfields.push(fieldNames[i]);
         }
-
-        return ruleSet;
     }
 
     removeErrorFromCurrentField() {
@@ -168,12 +174,8 @@ export default class Validator {
         return form[fieldName];
     }
 
-    getFieldRules(ruleSet) {
-        return ruleSet[this.currentfield];
-    }
-
     callValidationMethod(ruleObjectKeyIndex, ruleSet) {
-        let ruleObjectKey = this.getFieldRules(ruleSet)[ruleObjectKeyIndex];
+        let ruleObjectKey = ruleSet.getRulesInField(this.currentfield)[ruleObjectKeyIndex];
         let rule = this.makeRuleFromKey(ruleObjectKey);
 
         return rule.validate();
@@ -191,10 +193,6 @@ export default class Validator {
 
     hasParentField() {
         return this.parentfields.length > 0;
-    }
-
-    isParentField(ruleSet) {
-        return !Array.isArray(ruleSet[this.currentfield]);
     }
 
     errorsAreSet(errors) {

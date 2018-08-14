@@ -8,8 +8,6 @@ export default class Required extends Rule {
         return this.tryHandleType(type);
     }
 
-
-
     handleString() {
         if(this.value.trim() === '') {
             return this.getMessage();

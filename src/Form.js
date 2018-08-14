@@ -28,6 +28,10 @@ export default class Form {
         this.validator.validateField(fieldName);
     }
 
+    getErrorOnField(fieldName) {
+        return this.validator.getError(fieldName);
+    }
+
     rules() {
         return {};
     }

@@ -159,7 +159,7 @@ describe('ValidationTest', () => {
         validator.currentfield = 'name';
         let errors = ['this is an error'];
 
-        validator.setErrorsWithParent(errors);
+        validator.nestErrorsInParent(errors);
 
         expect(validator.errors).toEqual({"user": {"name": ["this is an error"]}});
 

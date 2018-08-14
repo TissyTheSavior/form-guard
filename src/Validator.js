@@ -8,11 +8,11 @@ import Max      from "./Max";
 export default class Validator {
 
     constructor(form = {}, ruleSet = {}) {
-        this.form = form;
-        this.ruleSet = ruleSet;
+        this.form         = form;
+        this.errors       = {};
+        this.ruleSet      = ruleSet;
         this.currentfield = '';
         this.parentfields = [];
-        this.errors = {};
         this.setValidationRules();
     }
 
@@ -121,23 +121,24 @@ export default class Validator {
             }
             return errors;
         }
-        else {
-            return errors[field];
-        }
+        return errors[field];
     }
 
     setErrors(errors) {
-        if(this.errorsAreSet(errors)) {
-            if(this.hasParentField()) {
-                this.setErrorsWithParent(errors);
-            }
-            else {
-                this.errors[this.currentfield] = errors;
-            }
+        if(!this.errorsAreSet(errors)) {
+            return;
         }
+
+        if(this.hasParentField()) {
+            this.nestErrorsInParent(errors);
+        }
+        else {
+            this.errors[this.currentfield] = errors;
+        }
+
     }
 
-    setErrorsWithParent(newErrors) {
+    nestErrorsInParent(newErrors) {
         let errors = this.errors;
 
         for(let i in this.parentfields) {
@@ -184,6 +185,7 @@ export default class Validator {
             options = key.split(':');
             key = options.splice(0, 1)[0];
         }
+
         return new this.ruleObjects[key](this.currentfield, this.getFieldValue(this.currentfield), options)
     }
 
@@ -203,10 +205,8 @@ export default class Validator {
         return Object.keys(this.errors).length > 0;
     }
 
-
     setValidationRules() {
         let ruleObjects = this.getDefaultRules();
-
         let customRules = this.customRules();
 
         for(let rule in customRules) {

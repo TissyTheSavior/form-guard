@@ -1,6 +1,6 @@
 import expect    from 'expect';
 import Validator from "../src/Validator";
-import Rule      from "../src/Rule";
+import Rule      from "../src/Rules/Rule";
 
 
 describe("Validation Rules can be extended", () => {

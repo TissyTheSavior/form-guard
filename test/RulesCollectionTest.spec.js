@@ -1,7 +1,7 @@
 import expect          from 'expect';
 import RulesCollection from "../src/RulesCollection";
-import Url             from "../src/Url";
-import Email           from "../src/Email";
+import Url             from "../src/Rules/Url";
+import Email           from "../src/Rules/Email";
 
 describe('Rules Collection Test', () => {
 

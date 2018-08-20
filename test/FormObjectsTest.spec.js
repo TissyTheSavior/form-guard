@@ -46,5 +46,4 @@ describe('Test base form methods', () => {
 
         expect(form.getErrorOnField('foo')).toEqual('the foo field is required');
     });
-
 });

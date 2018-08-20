@@ -1,5 +1,6 @@
 import expect    from 'expect';
 import Validator from "../src/Validator";
+import Field     from "../src/Field";
 
 
 describe('ValidationTest', () => {
@@ -156,7 +157,7 @@ describe('ValidationTest', () => {
     it('Can Set Errors with a parent field', () => {
         let validator = new Validator();
         validator.parentfields = ['user'];
-        validator.currentfield = 'name';
+        validator.currentfield = new Field('name', '');
         let errors = ['this is an error'];
 
         validator.nestErrorsInParent(errors);

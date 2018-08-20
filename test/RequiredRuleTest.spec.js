@@ -1,10 +1,11 @@
 import expect   from 'expect';
-import Required from "../src/Required";
+import Required from "../src/Rules/Required";
+import Field    from "../src/Field";
 
 describe("Required Rules Test", () => {
 
     it('Fails to validate when a field is empty', () => {
-        let rule = new Required('firstName', '');
+        let rule = new Required(new Field('firstName', ''));
 
         let message = rule.validate();
 
@@ -12,7 +13,7 @@ describe("Required Rules Test", () => {
     });
 
     it('Fails to validate when a field is required but has only whitespace \' \'', () => {
-        let rule = new Required('firstName', '  \n');
+        let rule = new Required(new Field('firstName', '  \n'));
 
         let message = rule.validate();
 
@@ -20,7 +21,7 @@ describe("Required Rules Test", () => {
     });
 
     it('Can validate a required number', () => {
-        let rule = new Required('favoriteNumber', 0);
+        let rule = new Required(new Field('favoriteNumber', 0));
         let message = rule.validate();
 
         expect(message).toBe('the favorite number field is required');
@@ -33,7 +34,7 @@ describe("Required Rules Test", () => {
     });
 
     it('Returns undefined when the input is an unprocessable type', () => {
-        let rule = new Required('someField', {});
+        let rule = new Required(new Field('someField', {}));
 
         let message = rule.validate();
 

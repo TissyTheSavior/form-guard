@@ -1,9 +1,9 @@
-import Url      from "./Url";
-import Email    from "./Email";
-import Required from "./Required";
-import Phone    from "./Phone";
-import Min      from "./Min";
-import Max      from "./Max";
+import Url      from "./Rules/Url";
+import Email    from "./Rules/Email";
+import Required from "./Rules/Required";
+import Phone    from "./Rules/Phone";
+import Min      from "./Rules/Min";
+import Max      from "./Rules/Max";
 
 export default class RulesCollection {
 
@@ -17,11 +17,27 @@ export default class RulesCollection {
         }
     }
 
-    makeRule(key, field, value) {
+    runValidationsAndGetErrors(ruleSet, field) {
+        let errors = [];
+        let rules = ruleSet.getRulesInField(field.name);
+
+        for(let i in rules) {
+            let error = this.makeRule(rules[i], field).validate();
+
+            if(error !== undefined) {
+                errors.push(error);
+            }
+
+        }
+
+        return errors;
+    }
+
+    makeRule(key, field) {
         let options;
         [key, options] = RulesCollection.splitKeyFromOptions(key);
 
-        return new this[key](field, value, options);
+        return new this[key](field, options);
     }
 
     static splitKeyFromOptions(key) {

@@ -2,9 +2,9 @@ import { lowerCase } from "lodash";
 
 export default class Rule {
 
-    constructor(fieldName, value, options = []) {
-        this.fieldName = fieldName;
-        this.value = value;
+    constructor(field, options = []) {
+        this.fieldName = field.name;
+        this.value = field.value;
         this.options = options
     }
 

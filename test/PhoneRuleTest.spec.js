@@ -1,10 +1,11 @@
 import expect from 'expect';
-import Phone  from "../src/Phone";
+import Phone  from "../src/Rules/Phone";
+import Field  from "../src/Field";
 
 describe('Phone Rule Test', () => {
 
     it('Can validate a Phone', () => {
-        let rule = new Phone('phone', '123');
+        let rule = new Phone(new Field('phone', '123'));
         let message = rule.validate();
 
         expect(message).toBe('please provide a valid phone number');

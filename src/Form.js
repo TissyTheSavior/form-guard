@@ -15,14 +15,14 @@ export default class Form {
     }
 
     validate() {
-        this.validator = new Validator(this, this.rules());
+        this.validator = this.getValidator();
         this.validator.validate();
     }
 
     validateField(fieldName) {
         let errors = this.getValidationErrors();
 
-        this.validator = new Validator(this, this.rules());
+        this.validator = this.getValidator();
         this.validator.errors = errors;
 
         this.validator.validateField(fieldName);

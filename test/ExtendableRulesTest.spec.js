@@ -57,4 +57,5 @@ describe("Validation Rules can be extended", () => {
 
         expect(errors).toEqual({});
     });
+
 });

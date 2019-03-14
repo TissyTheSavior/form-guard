@@ -1,6 +1,6 @@
 {
   "name": "form-guard",
-  "version": "0.0.4",
+  "version": "0.0.8",
   "description": "An clean api for validating forms",
   "main": "dist/index.js",
   "scripts": {
@@ -14,7 +14,8 @@
     ]
   },
   "files": [
-    "dist/*.js"
+    "dist/*.js",
+    "dist/*/*.js"
   ],
   "dependencies": {
     "babel-cli": "^6.26.0",

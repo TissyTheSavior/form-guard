@@ -20,6 +20,10 @@ export default class Required extends Rule {
         }
     }
 
+    handleUndefined() {
+        return this.getMessage();
+    }
+
     getMessage() {
         return 'the ' + this.getReadableFieldName() + ' field is required'
     }

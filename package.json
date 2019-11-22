@@ -1,6 +1,6 @@
 {
   "name": "form-guard",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "An clean api for validating forms",
   "main": "dist/index.js",
   "scripts": {

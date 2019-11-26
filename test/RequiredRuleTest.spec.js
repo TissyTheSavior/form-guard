@@ -46,6 +46,19 @@ describe("Required Rules Test", () => {
         expect(message).toBe(undefined);
     });
 
+    it('Can validate against null', () => {
+        let rule = new Required(new Field('foo', null));
+        let message = rule.validate();
+
+        expect(message).toBe('the foo field is required');
+
+        rule.value = 'bar';
+
+        message = rule.validate();
+
+        expect(message).toBe(undefined);
+    });
+
     it('Returns undefined when the input is an unprocessable type', () => {
         let rule = new Required(new Field('someField', {}));
 

@@ -5,6 +5,11 @@ export default class Required extends Rule {
 
     validate() {
         let type = capitalize(typeof this.value);
+
+        if(this.value == null) {
+            return this.getMessage();
+        }
+
         return this.tryHandleType(type);
     }
 
@@ -18,10 +23,6 @@ export default class Required extends Rule {
         if(this.value <= 0) {
             return this.getMessage();
         }
-    }
-
-    handleUndefined() {
-        return this.getMessage();
     }
 
     getMessage() {
